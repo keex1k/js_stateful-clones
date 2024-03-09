@@ -7,32 +7,32 @@ function transformStateWithClones(state, actions) {
 
   const actLength = Object.keys(actions).length;
 
-  for (const key in actions) {
-    const p = actions[key];
+  for (const step in actions) {
+    const allTypes = actions[step];
 
-    for (const x in p) {
-      if (p[x] === 'clear') {
-        for (const s in pomObject) {
-          delete pomObject[s];
+    for (const type in allTypes) {
+      if (allTypes[type] === 'clear') {
+        for (const prop in pomObject) {
+          delete pomObject[prop];
         }
 
         result.push(pomObject);
-      } else if (Array.isArray(p[x])) {
-        const arr = p[x];
+      } else if (Array.isArray(allTypes[type])) {
+        const array = allTypes[type];
 
-        for (const a in arr) {
-          for (const s1 in pomObject) {
-            if (arr[a] === s1) {
-              delete pomObject[s1];
+        for (const arrElement in array) {
+          for (const poProp in pomObject) {
+            if (array[arrElement] === poProp) {
+              delete pomObject[poProp];
             }
           }
         }
         result.push(pomObject);
-      } else if (typeof p[x] === 'object') {
-        const obj = p[x];
+      } else if (typeof allTypes[type] === 'object') {
+        const propsToAdd = allTypes[type];
 
-        for (const o in obj) {
-          pomObject[o] = obj[o];
+        for (const ptaProp in propsToAdd) {
+          pomObject[ptaProp] = propsToAdd[ptaProp];
         }
         result.push(pomObject);
       }
