@@ -1,5 +1,11 @@
 # Cloning and transforming state
 
+## The guideline
+
+**Read [the guideline](https://github.com/mate-academy/js_task-guideline/blob/master/README.md) before start**
+
+## Task description:
+
 Write a `transformStateWithClones` function that takes a `state` object and an `actions` array,
 applies each action to the previos `state` to calculate the next state,
 and returns an array with states recieved after each action.
@@ -69,7 +75,3 @@ console.log(stateHistory);
 //   { foo: 'bar', name: 'Jim' },
 // ]
 ```
-
-## The guideline
-
-**Read [the guideline](https://github.com/mate-academy/js_task-guideline/blob/master/README.md) before start**
