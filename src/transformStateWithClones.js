@@ -1,42 +1,28 @@
-'use strict'
+'use strict';
 
 function transformStateWithClones(state, actions) {
   // write code here
-  const pomObject = { ...state };
+  let pomObject = { ...state };
   const result = [];
 
-  const actLength = Object.keys(actions).length;
-
-  for (const step in actions) {
-    const allTypes = actions[step];
-
-    for (const type in allTypes) {
-      if (allTypes[type] === 'clear') {
-        for (const prop in pomObject) {
-          delete pomObject[prop];
+  for (const action of actions) {
+    switch (action.type) {
+      case 'clear':
+        pomObject = {};
+        break;
+      case 'addProperties':
+        Object.assign(pomObject, action.extraData);
+        break;
+      case 'removeProperties':
+        for (const key of action.keysToRemove) {
+          delete pomObject[key];
         }
-
-        result.push(pomObject);
-      } else if (Array.isArray(allTypes[type])) {
-        const array = allTypes[type];
-
-        for (const arrElement in array) {
-          for (const poProp in pomObject) {
-            if (array[arrElement] === poProp) {
-              delete pomObject[poProp];
-            }
-          }
-        }
-        result.push(pomObject);
-      } else if (typeof allTypes[type] === 'object') {
-        const propsToAdd = allTypes[type];
-
-        for (const ptaProp in propsToAdd) {
-          pomObject[ptaProp] = propsToAdd[ptaProp];
-        }
-        result.push(pomObject);
-      }
+        break;
+      default:
+        console.error(`Unknown action type: ${action.type}`);
     }
+
+    result.push(pomObject);
   }
 
   return result;
